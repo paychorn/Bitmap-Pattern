@@ -1,0 +1,96 @@
+
+State Machine - |Question2|HDMI:u_HDMI|HDMIConfig:u_HDMIConfig|rState
+Name rState.stEnd rState.stRead rState.stSendRdReq rState.stWtAddr rState.stWrite rState.stSendWrReq rState.stChkBusy 
+rState.stChkBusy 0 0 0 0 0 0 0 
+rState.stSendWrReq 0 0 0 0 0 1 1 
+rState.stWrite 0 0 0 0 1 0 1 
+rState.stWtAddr 0 0 0 1 0 0 1 
+rState.stSendRdReq 0 0 1 0 0 0 1 
+rState.stRead 0 1 0 0 0 0 1 
+rState.stEnd 1 0 0 0 0 0 1 
+
+State Machine - |Question2|HDMI:u_HDMI|HDMIConfig:u_HDMIConfig|I2CCtrl:u_I2CCtrl1|rState
+Name rState.stFinish rState.stNop2 rState.stTxData rState.stNop1 rState.stTxIndex rState.stNop0 rState.stTxDevId0 rState.stStart1 rState.stStart0 rState.stIdle 
+rState.stIdle 0 0 0 0 0 0 0 0 0 0 
+rState.stStart0 0 0 0 0 0 0 0 0 1 1 
+rState.stStart1 0 0 0 0 0 0 0 1 0 1 
+rState.stTxDevId0 0 0 0 0 0 0 1 0 0 1 
+rState.stNop0 0 0 0 0 0 1 0 0 0 1 
+rState.stTxIndex 0 0 0 0 1 0 0 0 0 1 
+rState.stNop1 0 0 0 1 0 0 0 0 0 1 
+rState.stTxData 0 0 1 0 0 0 0 0 0 1 
+rState.stNop2 0 1 0 0 0 0 0 0 0 1 
+rState.stFinish 1 0 0 0 0 0 0 0 0 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|MtDdrRd:u_MtDdrRd|rMtState
+Name rMtState.stRdTrans rMtState.stGenRdReq rMtState.stChkRdRdy rMtState.stIdle 
+rMtState.stIdle 0 0 0 0 
+rMtState.stChkRdRdy 0 0 1 1 
+rMtState.stGenRdReq 0 1 0 1 
+rMtState.stRdTrans 1 0 0 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|MtDdrWr:u_MtDdrWr|rMtState
+Name rMtState.stWrTrans rMtState.stWtBurstCal rMtState.stChkWrRdy rMtState.stIdle 
+rMtState.stIdle 0 0 0 0 
+rMtState.stChkWrRdy 0 0 1 1 
+rMtState.stWtBurstCal 0 1 0 1 
+rMtState.stWrTrans 1 0 0 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:ddr3_controller_avl_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter|state
+Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
+state.ST_IDLE 0 0 0 0 
+state.ST_COMP_TRANS 1 0 0 1 
+state.ST_UNCOMP_TRANS 1 0 1 0 
+state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_c0:c0|alt_mem_if_nextgen_ddr3_controller_core:ng0|alt_mem_ddrx_controller_st_top:alt_mem_ddrx_controller_top_inst|alt_mem_ddrx_controller:controller_inst|alt_mem_ddrx_cmd_gen:cmd_gen_inst|ecc_state_sm
+Name ecc_state_sm.FULL_RD ecc_state_sm.0100 ecc_state_sm.FULL_WR ecc_state_sm.PARWR_WR ecc_state_sm.0001 ecc_state_sm.IDLE ecc_state_sm.CORRECT_WR 
+ecc_state_sm.IDLE 0 0 0 0 0 0 0 
+ecc_state_sm.0001 0 0 0 0 1 1 0 
+ecc_state_sm.PARWR_WR 0 0 0 1 0 1 0 
+ecc_state_sm.FULL_WR 0 0 1 0 0 1 0 
+ecc_state_sm.0100 0 1 0 0 0 1 0 
+ecc_state_sm.FULL_RD 1 0 0 0 0 1 0 
+ecc_state_sm.CORRECT_WR 0 0 0 0 0 1 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_s0:s0|rw_manager_ddr3:sequencer_rw_mgr_inst|rw_manager_generic:rw_mgr_inst|state
+Name state.STATE_RW_REFRESH state.STATE_RW_DONE state.STATE_RW_EXEC state.STATE_RW_IDLE state.STATE_RW_RESTORE 
+state.STATE_RW_IDLE 0 0 0 0 0 
+state.STATE_RW_EXEC 0 0 1 1 0 
+state.STATE_RW_DONE 0 1 0 1 0 
+state.STATE_RW_REFRESH 1 0 0 1 0 
+state.STATE_RW_RESTORE 0 0 0 1 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_s0:s0|rw_manager_ddr3:sequencer_rw_mgr_inst|rw_manager_generic:rw_mgr_inst|rw_manager_core:rw_mgr_core_inst|state
+Name state.RW_MGR_STATE_DONE state.RW_MGR_STATE_READING state.RW_MGR_STATE_RUNNING state.RW_MGR_STATE_IDLE 
+state.RW_MGR_STATE_IDLE 0 0 0 0 
+state.RW_MGR_STATE_RUNNING 0 0 1 1 
+state.RW_MGR_STATE_READING 0 1 0 1 
+state.RW_MGR_STATE_DONE 1 0 0 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_s0:s0|sequencer_phy_mgr:sequencer_phy_mgr_inst|state_phy_curr
+Name state_phy_curr.STATE_PHY_DONE 
+state_phy_curr.STATE_PHY_IDLE 0 
+state_phy_curr.STATE_PHY_DONE 1 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_s0:s0|sequencer_phy_mgr:sequencer_phy_mgr_inst|state_avl_curr
+Name state_avl_curr.STATE_AVL_IDLE state_avl_curr.STATE_AVL_DONE state_avl_curr.STATE_AVL_EXEC 
+state_avl_curr.STATE_AVL_IDLE 0 0 0 
+state_avl_curr.STATE_AVL_EXEC 1 0 1 
+state_avl_curr.STATE_AVL_DONE 1 1 0 
+
+State Machine - |Question2|MtDdr:u_MtDdr|ddr3_qsys:u_ddr3_qsys|ddr3_qsys_ddr3_controller:ddr3_controller|ddr3_qsys_ddr3_controller_s0:s0|sequencer_pll_mgr:sequencer_pll_mgr_inst|state
+Name state.READWAIT state.READ state.PLLWAIT3 state.PLLWAIT2 state.PLLWAIT state.WRITE state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 
+state.WRITE 0 0 0 0 0 1 1 
+state.PLLWAIT 0 0 0 0 1 0 1 
+state.PLLWAIT2 0 0 0 1 0 0 1 
+state.PLLWAIT3 0 0 1 0 0 0 1 
+state.READ 0 1 0 0 0 0 1 
+state.READWAIT 1 0 0 0 0 0 1 
+
+State Machine - |Question2|RxSerial:u_RxSerial|rState
+Name rState.stWait rState.stRxStart rState.stIdle 
+rState.stIdle 0 0 0 
+rState.stRxStart 0 1 1 
+rState.stWait 1 0 1 

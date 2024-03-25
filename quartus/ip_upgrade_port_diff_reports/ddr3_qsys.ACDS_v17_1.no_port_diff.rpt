@@ -1,0 +1,23 @@
+IP Ports Diff Report for ddr3_qsys
+Wed Dec 25 09:46:48 2019
+Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. IP Information
+
+
+
++--------------------------------------------------------+
+; IP Information                                         ;
++----------------------+---------------------------------+
+; IP Variation Name    ; ddr3_qsys                       ;
+; Prior Version        ; ACDS_v16.0                      ;
+; New Version          ; ACDS_v17.1                      ;
+; New File             ; ddr3_qsys/synthesis/ddr3_qsys.v ;
+; Has Port Differences ; No                              ;
++----------------------+---------------------------------+
+
+

@@ -1,0 +1,349 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "DDR3_A[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[2]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[3]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[4]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[5]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[6]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[7]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[8]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[9]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[10]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[11]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[12]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[13]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_A[14]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_BA[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_BA[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_BA[2]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CAS_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CKE[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CS_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DM[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DM[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_ODT[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_RAS_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_RESET_n",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_WE_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_I2C_SCL",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[0]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[2]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[3]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[4]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[5]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[6]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[7]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[8]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[9]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[10]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[11]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[12]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[13]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[14]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[15]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[16]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[17]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[18]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[19]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[20]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[21]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[22]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_D[23]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_DE",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_HS",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_VS",
+					"strict" : false
+				},
+				{
+					"name" : "LED[0]",
+					"strict" : false
+				},
+				{
+					"name" : "LED[3]",
+					"strict" : false
+				},
+				{
+					"name" : "LED[4]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CK_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CK_p[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[2]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[3]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[4]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[5]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[6]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[7]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[8]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[9]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[10]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[11]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[12]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[13]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[14]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQ[15]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQS_n[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQS_n[1]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQS_p[0]",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_DQS_p[1]",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_I2C_SDA",
+					"strict" : false
+				},
+				{
+					"name" : "HDMI_TX_INT",
+					"strict" : false
+				},
+				{
+					"name" : "DDR3_CLK_50",
+					"strict" : false
+				},
+				{
+					"name" : "Clk50",
+					"strict" : false
+				},
+				{
+					"name" : "RstB",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
