@@ -1,25 +1,3 @@
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
--- Filename     Question2.vhd
--- Title        Top
---
--- Company      Design Gateway Co., Ltd.
--- Project      DDCamp
--- PJ No.       
--- Syntax       VHDL
--- Note         
-
--- Version      1.01
--- Author       J.Natthapat
--- Date         2020/12/18
--- Remark       Add Push Button
-
--- Version      1.00
--- Author       B.Attapon
--- Date         2017/11/17
--- Remark       New Creation
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.all;

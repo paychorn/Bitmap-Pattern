@@ -1,21 +1,3 @@
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
--- Filename     UserWrDdr.vhd
--- Title        Top
---
--- Company      Design Gateway Co., Ltd.
--- Project      DDCamp
--- PJ No.       
--- Syntax       VHDL
--- Note         
-
--- Version      1.00
--- Author       B.Attapon
--- Engineer			R.Phonlasen
--- Date         2023/12/25
--- Remark       New Creation
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.all;
@@ -56,9 +38,9 @@ Architecture rtl Of UserWrDdr Is
 ----------------------------------------------------------------------------------
 
 	-- WrCtrl I/F
-	signal rMemInitDone	  : std_logic_vector( 1 downto 0 );
-	signal rMtDdrWrReq		: std_logic_vector( 1 downto 0 ); 
-	signal rMtDdrWrAddr		: std_logic_vector( 28 downto 7 );
+	signal rMemInitDone	  : std_logic_vector( 1 downto 0 );   -- The memory initialization is complete 
+	signal rMtDdrWrReq		: std_logic_vector( 1 downto 0 );   -- User request to write data to DDR
+	signal rMtDdrWrAddr		: std_logic_vector( 28 downto 7 );  -- Start address to write data at DDR
 
 Begin
 
@@ -67,18 +49,20 @@ Begin
 ----------------------------------------------------------------------------------
 	
 	-- RdCtrl I/F
-	MtDdrWrReq <= rMtDdrWrReq(0);
-	MtDdrWrAddr <= rMtDdrWrAddr;
+	MtDdrWrReq  	<= rMtDdrWrReq(0);
+	MtDdrWrAddr	  <= rMtDdrWrAddr;
 
-	-- Bypass the data
-	T2UWrFfRdEn <= UWr2DFfRdEn;
+	-- Just bypass the data
+	T2UWrFfRdEn 	<= UWr2DFfRdEn;
 	UWr2DFfRdData <= T2UWrFfRdData;
-	UWr2DFfRdCnt <= T2UWrFfRdCnt;
+	UWr2DFfRdCnt 	<= T2UWrFfRdCnt;
 
 ----------------------------------------------------------------------------------
 -- DFF 
 ----------------------------------------------------------------------------------
-
+  
+	--[[ WrCtrl I/F ]] -----------------------------
+  -- Synchronize the memory initialization done signal
 	u_rMemInitDone : Process (Clk) Is
 	Begin
 		if ( rising_edge(Clk) ) then
@@ -91,6 +75,7 @@ Begin
 		end if;
 	End Process u_rMemInitDone;
 
+	-- Synchornize the request and maintain last input
 	u_rMtDdrWrReq : Process (Clk) is
   begin
 		if ( rising_edge(Clk) ) then
@@ -106,6 +91,7 @@ Begin
 		end if;
 	end Process u_rMtDdrWrReq;
 
+	-- Calculate the address from the dip switch
 	u_rMtDdrWrAddr : Process (Clk) is
 		begin
 			if ( rising_edge(Clk) ) then

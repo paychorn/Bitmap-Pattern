@@ -1,20 +1,3 @@
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
--- Filename     UserRdDdr.vhd
--- Title        Top
---
--- Company      Design Gateway Co., Ltd.
--- Project      DDCamp
--- PJ No.       
--- Syntax       VHDL
--- Note         
-
--- Version      1.00
--- Author       B.Attapon
--- Date         2017/12/20
--- Remark       New Creation
-----------------------------------------------------------------------------------
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.all;
@@ -61,13 +44,15 @@ Architecture RTL Of UserRdDdr Is
 -- Signal declaration
 ----------------------------------------------------------------------------------
 	
-	-- HDMICtrl I/F
-	signal	rHDMIReq			: std_logic;
+	-- HDMICtrl Interface
+	signal	rHDMIReq			: std_logic; -- HDMI request to read data from DDR
 
-	-- RdCtrl I/F
-	signal rMemInitDone	: std_logic_vector( 1 downto 0 );
-	signal rMtDdrRdReq 		: std_logic_vector( 1 downto 0 ); 
-	signal rMtDdrRdAddr	  : std_logic_vector( 28 downto 7 );
+	-- RdCtrl Interface
+	signal rMemInitDone		: std_logic_vector( 1 downto 0 );		-- The memory initialization is complete
+
+
+	signal rMtDdrRdReq 		: std_logic_vector( 1 downto 0 ); 	-- User request to read data from DDR
+	signal rMtDdrRdAddr	  : std_logic_vector( 28 downto 7 );  -- Start address to read data from DDR
 	
 Begin
 
@@ -91,19 +76,8 @@ Begin
 -- DFF 
 ----------------------------------------------------------------------------------
 	
-	-- HDMICtrl I/F
-	u_rMemInitDone : Process (Clk) Is
-	Begin
-		if ( rising_edge(Clk) ) then
-			if ( RstB='0' ) then
-				rMemInitDone	<= "00";
-			else
-				-- Use rMemInitDone(1) in your design
-				rMemInitDone	<= rMemInitDone(0) & MemInitDone;
-			end if;
-		end if;
-	End Process u_rMemInitDone;
-
+	-- [[ HDMICtrl I/F ]] -----------------------------
+	-- Ensure memory initialized and HDMI ready.
 	u_rHDMIReq : Process (Clk) Is
 	Begin
 		if ( rising_edge(Clk) ) then
@@ -121,8 +95,21 @@ Begin
 		end if;
 	End Process u_rHDMIReq;
 
-	--------------------------------------------------
-	-- RdCtrl I/F
+	--[[ RdCtrl I/F ]] -----------------------------
+	-- Sync the memory initialization done signal
+	u_rMemInitDone : Process (Clk) Is
+	Begin
+		if ( rising_edge(Clk) ) then
+			if ( RstB='0' ) then
+				rMemInitDone	<= "00";
+			else
+				-- Use rMemInitDone(1) in your design
+				rMemInitDone	<= rMemInitDone(0) & MemInitDone;
+			end if;
+		end if;
+	End Process u_rMemInitDone;
+	
+	-- Synchornize the request and maintain last input
 	u_rMtDdrRdReq : Process (Clk) is
 		begin
 			if ( rising_edge(Clk) ) then
@@ -138,6 +125,7 @@ Begin
 			end if;
 		end Process u_rMtDdrRdReq;
 
+	-- Calculate the address from the dip switch
 	u_rMtDdrRdAddr : Process (Clk) is
 	begin
 		if ( rising_edge(Clk) ) then
