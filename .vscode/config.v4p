@@ -1,0 +1,13 @@
+[libraries]
+  spi_pkg.vhd = "spi_lib, spi_test_lib"
+  libs/math/*.vhd =  "math_lib"
+  libs/**/string*.vhd = "string_lib"
+[excludes]
+  **/out/*.vhd = true
+  bin/** = true
+[settings]
+  V4p.Settings.Formatting.Indentation.TabWidth = 2
+  V4p.Settings.Formatting.Indentation.UseTabs = true
+[ignores]
+  **/_dbg.vhd @ signal_*_dbg_s = "never-read, never-written"
+  duts/dut*.vhd @ dut_inst.*_dbg_o = missing-association

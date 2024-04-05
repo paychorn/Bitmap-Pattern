@@ -43,252 +43,247 @@
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
 library IEEE;
-use IEEE.STD_LOGIC_1164.all;
-use IEEE.STD_LOGIC_UNSIGNED.all;
---use IEEE.STD_LOGIC_ARITH.all;
+	use IEEE.STD_LOGIC_1164.all;
+	use IEEE.STD_LOGIC_UNSIGNED.all;
+	--use IEEE.STD_LOGIC_ARITH.all;
 
-Entity HDMIConfig Is
-    Port (
-        Clk      		: in        std_logic;
-        RstB     		: in        std_logic;
+entity HDMIConfig is
+	port (
+		Clk         : in    std_logic;
+		RstB        : in    std_logic;
 
 		-- I2C Interface
-        I2CSDA        	: inout     std_logic;
-        I2CSCL        	: out       std_logic;
-		
+		I2CSDA      : inout std_logic;
+		I2CSCL      : out   std_logic;
+
 		-- HDMI Interface
-		HDMI_TX_INT		: in		std_logic;
-		
-		Busy			: out		std_logic
-    );
-End Entity HDMIConfig;
+		HDMI_TX_INT : in    std_logic;
 
-Architecture rtl Of HDMIConfig Is
-
--------------------------------------------------------------------------
--- Component Declaration
--------------------------------------------------------------------------
-
-	Component I2CCtrl Is
-	Port (
-        Clk      		: in        std_logic;			
-        RstB     		: in        std_logic; 			
-										  
-		I2CCmdReq		: in		std_logic; 
-		I2CCmdBusy		: out		std_logic;
-		I2CStartAddr	: in		std_logic_vector( 7 downto 0 );
-		I2CDataOut		: in		std_logic_vector( 7 downto 0 );
-		I2CDataReq		: out		std_logic;
-		I2CError		: out		std_logic;
-
-		-- I2C command
-        I2CSDA        	: inout     std_logic; 			
-        I2CSCL        	: out       std_logic       	
-    );
-	End Component I2CCtrl;
-	
-	Component HDMIRom Is
-	Port (
-        Clk				: in	std_logic;
-		
-		RdAddr			: in	std_logic_vector( 4 downto 0 ); -- Read Address
-
-		HDMIConfAddr	: out	std_logic_vector( 7 downto 0 );	-- I2C HDMI Config Address
-		HDMIConfData	: out	std_logic_vector( 7 downto 0 )	-- I2C HDMI Config Data
-    );
-	End Component HDMIRom;
-
-----------------------------------------------------------------------------------
--- Signal Declaration
-----------------------------------------------------------------------------------
-
-	-- State Machine
-	type TI2C_STATE is	(
-							stChkBusy	,
-							stSendWrReq	,
-							stWrite		,
-							stWtAddr	,
-							stSendRdReq	,
-							stRead		,
-							stEnd
-						);
-
-	signal rState	:	TI2C_STATE;
-	
-	-- interface I2CCtrl
-	signal	rI2CCmdReq		: std_logic; 
-	signal	I2CCmdBusy		: std_logic;
-	signal	I2CError		: std_logic;
-	
-	-- interface HDMIRom
-	signal	HDMIConfAddr	: std_logic_vector( 7 downto 0 );
-	signal	HDMIConfData	: std_logic_vector( 7 downto 0 );
-	
-	--Internal signal
-	signal	rI2CCmdBusy		: std_logic_vector( 1 downto 0 );
-	signal	rRomAddrCnt		: std_logic_vector( 4 downto 0 );
-	signal	rBusy					: std_logic;
-
-Begin
-
-----------------------------------------------------------------------------------
--- Output Assignment
-----------------------------------------------------------------------------------
-	
-	Busy	<= rBusy;
-	
-----------------------------------------------------------------------------------
--- DFF
-----------------------------------------------------------------------------------
-
-	u_I2CCtrl1 : I2CCtrl
-	Port map
-	(
-	   RstB				=>	RstB			,
-	   Clk				=>	Clk				,
-						
-	   I2CCmdReq		=>	rI2CCmdReq		,
-	   I2CCmdBusy		=>	I2CCmdBusy		,
-	   I2CStartAddr		=>	HDMIConfAddr	,	-- write addr
-	   I2CDataOut		=>	HDMIConfData	,	-- write data
-	   I2CDataReq		=>	open			,
-	   I2CError			=>	I2CError		,
-	   
-	   I2CSDA			=>	I2CSDA			,
-	   I2CSCL			=>	I2CSCL
+		Busy        : out   std_logic
 	);
+end entity;
 
-	u_rState : Process (Clk) Is
-	Begin	
-		if ( rising_edge(Clk) ) then
-			if ( RstB='0' ) then
-				rState	<= stChkBusy;
+architecture rtl of HDMIConfig is
+
+	-------------------------------------------------------------------------
+	-- Component Declaration
+	-------------------------------------------------------------------------
+	component I2CCtrl is
+		port (
+			Clk          : in    std_logic;
+			RstB         : in    std_logic;
+
+			I2CCmdReq    : in    std_logic;
+			I2CCmdBusy   : out   std_logic;
+			I2CStartAddr : in    std_logic_vector(7 downto 0);
+			I2CDataOut   : in    std_logic_vector(7 downto 0);
+			I2CDataReq   : out   std_logic;
+			I2CError     : out   std_logic;
+
+			-- I2C command
+			I2CSDA       : inout std_logic;
+			I2CSCL       : out   std_logic
+		);
+	end component;
+
+	component HDMIRom is
+		port (
+			Clk          : in  std_logic;
+
+			RdAddr       : in  std_logic_vector(4 downto 0); -- Read Address
+
+			HDMIConfAddr : out std_logic_vector(7 downto 0); -- I2C HDMI Config Address
+			HDMIConfData : out std_logic_vector(7 downto 0)  -- I2C HDMI Config Data
+		);
+	end component;
+
+	----------------------------------------------------------------------------------
+	-- Signal Declaration
+	----------------------------------------------------------------------------------
+	-- State Machine
+	type TI2C_STATE is (
+			stChkBusy,
+			stSendWrReq,
+			stWrite,
+			stWtAddr,
+			stSendRdReq,
+			stRead,
+			stEnd
+		);
+
+	signal rState : TI2C_STATE;
+
+	-- interface I2CCtrl
+	signal rI2CCmdReq : std_logic;
+	signal I2CCmdBusy : std_logic;
+	signal I2CError   : std_logic;
+
+	-- interface HDMIRom
+	signal HDMIConfAddr : std_logic_vector(7 downto 0);
+	signal HDMIConfData : std_logic_vector(7 downto 0);
+
+	--Internal signal
+	signal rI2CCmdBusy : std_logic_vector(1 downto 0);
+	signal rRomAddrCnt : std_logic_vector(4 downto 0);
+	signal rBusy       : std_logic;
+
+begin
+
+	----------------------------------------------------------------------------------
+	-- Output Assignment
+	----------------------------------------------------------------------------------
+	Busy <= rBusy;
+
+	----------------------------------------------------------------------------------
+	-- DFF
+	----------------------------------------------------------------------------------
+	u_I2CCtrl1: I2CCtrl
+		port map (
+			RstB         => RstB,
+			Clk          => Clk,
+
+			I2CCmdReq    => rI2CCmdReq,
+			I2CCmdBusy   => I2CCmdBusy,
+			I2CStartAddr => HDMIConfAddr, -- write addr
+			I2CDataOut   => HDMIConfData, -- write data
+			I2CDataReq   => open,
+			I2CError     => I2CError,
+
+			I2CSDA       => I2CSDA,
+			I2CSCL       => I2CSCL
+		);
+
+	u_rState: process (Clk) is
+	begin
+		if (rising_edge(Clk)) then
+			if (RstB = '0') then
+				rState <= stChkBusy;
 			else
-				case ( rState ) is
-					when stChkBusy	=>
-						if ( I2CCmdBusy='0' ) then
-							rState	<= stSendWrReq;
+				case (rState) is
+					when stChkBusy =>
+						if (I2CCmdBusy = '0') then
+							rState <= stSendWrReq;
 						else
-							rState	<= stChkBusy;
-						End if;
-				
-					when stSendWrReq	=>
-						rState	<= stWrite;
-					
-					when stWrite	=>
+							rState <= stChkBusy;
+						end if;
+
+					when stSendWrReq =>
+						rState <= stWrite;
+
+					when stWrite =>
 						-- End I2C transfer
-						if ( rI2CCmdBusy="10" ) then
+						if (rI2CCmdBusy = "10") then
 							-- Check end position
-							if ( rRomAddrCnt(4 downto 0)=31 ) then
-								rState	<= stEnd;
+							if (rRomAddrCnt(4 downto 0) = 31) then
+								rState <= stEnd;
 							else
-								rState	<= stWtAddr;
+								rState <= stWtAddr;
 							end if;
 						else
-							rState		<= stWrite;
-						end if;
-						
-					-- Wait data from HDMIRom valid
-					when stWtAddr	=>
-						rState	<= stSendWrReq;
-					
-					when stEnd	=>
-						-- retransmission when receive interrupt
-						if ( HDMI_TX_INT='0' ) then
-							rState	<= stChkBusy;
-						else
-							rState	<= stEnd;
+							rState <= stWrite;
 						end if;
 
-					when others	=>
-						rState	<= stChkBusy;
+						-- Wait data from HDMIRom valid
+					when stWtAddr =>
+						rState <= stSendWrReq;
+
+					when stEnd =>
+						-- retransmission when receive interrupt
+						if (HDMI_TX_INT = '0') then
+							rState <= stChkBusy;
+						else
+							rState <= stEnd;
+						end if;
+
+					when others =>
+						rState <= stChkBusy;
 
 				end case;
-			End if;
-		end if;
-	End Process u_rState;
-
-	u_rBusy : Process (Clk) Is
-	Begin
-		if ( rising_edge(Clk) )then
-			if ( RstB='0' ) then
-				rBusy	<= '1';
-			else
-				-- End of initialization
-				if ( rState=stEnd ) then
-					rBusy	<= '0';
-				else
-					rBusy	<= '1';
-				End if;
-			End if;
-		End if;
-	End Process u_rBusy;
-			
-	u_rI2CCmdBusy : Process (Clk) Is
-	Begin
-		if ( rising_edge(Clk) ) then
-			if ( RstB='0' ) then
-				rI2CCmdBusy(1 downto 0)	<= "00";
-			else
-				-- Add FF for edge detection
-				rI2CCmdBusy(1)	<= rI2CCmdBusy(0);
-				rI2CCmdBusy(0)	<= I2CCmdBusy;
 			end if;
 		end if;
-	End Process u_rI2CCmdBusy;
+	end process;
 
-	u_rRomAddrCnt : Process (Clk) Is
-	Begin
-		if ( rising_edge(Clk) ) then
-			if ( RstB='0' ) then
-				rRomAddrCnt(4 downto 0)	<= (others=>'0');
+	u_rBusy: process (Clk) is
+	begin
+		if (rising_edge(Clk)) then
+			if (RstB = '0') then
+				rBusy <= '1';
+			else
+				-- End of initialization
+				if (rState = stEnd) then
+					rBusy <= '0';
+				else
+					rBusy <= '1';
+				end if;
+			end if;
+		end if;
+	end process;
+
+	u_rI2CCmdBusy: process (Clk) is
+	begin
+		if (rising_edge(Clk)) then
+			if (RstB = '0') then
+				rI2CCmdBusy(1 downto 0) <= "00";
+			else
+				-- Add FF for edge detection
+				rI2CCmdBusy(1) <= rI2CCmdBusy(0);
+				rI2CCmdBusy(0) <= I2CCmdBusy;
+			end if;
+		end if;
+	end process;
+
+	u_rRomAddrCnt: process (Clk) is
+	begin
+		if (rising_edge(Clk)) then
+			if (RstB = '0') then
+				rRomAddrCnt(4 downto 0) <= (others => '0');
 			else
 				-- Retrans from start position when stEnd->stChkBusy
-				if ( rState=stEnd and HDMI_TX_INT='0' ) then
-					rRomAddrCnt	<= (others=>'0');
-				-- Increment to next address when stWrite->stWtAddr
-				elsif ( rI2CCmdBusy="10" ) then
-					if ( rRomAddrCnt(4 downto 0)=31 ) then
-						rRomAddrCnt	<= (others=>'0');
+				if (rState = stEnd and HDMI_TX_INT = '0') then
+					rRomAddrCnt <= (others => '0');
+					-- Increment to next address when stWrite->stWtAddr
+				elsif (rI2CCmdBusy = "10") then
+					if (rRomAddrCnt(4 downto 0) = 31) then
+						rRomAddrCnt <= (others => '0');
 					else
-						rRomAddrCnt	<= rRomAddrCnt + 1;
+						rRomAddrCnt <= rRomAddrCnt + 1;
 					end if;
 				else
-					rRomAddrCnt	<= rRomAddrCnt;
-				End if;
-			End if;
-		End if;
-	End Process u_rRomAddrCnt;
-	
-	u_rI2CCmdReq : Process (Clk) Is
-	Begin
-		if ( rising_edge(Clk) ) then
-			if ( RstB='0' ) then
-				rI2CCmdReq	<= '0';
+					rRomAddrCnt <= rRomAddrCnt;
+				end if;
+			end if;
+		end if;
+	end process;
+
+	u_rI2CCmdReq: process (Clk) is
+	begin
+		if (rising_edge(Clk)) then
+			if (RstB = '0') then
+				rI2CCmdReq <= '0';
 			else
 				-- Request is received
-				if ( I2CCmdBusy='1' ) then
+				if (I2CCmdBusy = '1') then
 					rI2CCmdReq <= '0';
-				elsif ( rState=stSendWrReq ) then
-					rI2CCmdReq	<= '1';
+				elsif (rState = stSendWrReq) then
+					rI2CCmdReq <= '1';
 				else
-					rI2CCmdReq	<= rI2CCmdReq;
-				End if;
-			End if;
-		End if;
-	End Process u_rI2CCmdReq;
-	
-	u_HDMIRom : HDMIRom
-	Port map(
-        Clk				=> Clk			,
+					rI2CCmdReq <= rI2CCmdReq;
+				end if;
+			end if;
+		end if;
+	end process;
 
-		RdAddr			=> rRomAddrCnt	,
+	u_HDMIRom: HDMIRom
+		port map (
+			Clk          => Clk,
 
-		HDMIConfAddr	=> HDMIConfAddr	,
-		HDMIConfData	=> HDMIConfData
-    );
+			RdAddr       => rRomAddrCnt,
 
-End Architecture rtl;
+			HDMIConfAddr => HDMIConfAddr,
+			HDMIConfData => HDMIConfData
+		);
+
+end architecture;
 
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
