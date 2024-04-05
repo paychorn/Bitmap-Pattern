@@ -42,16 +42,15 @@
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
 library IEEE;
-  use IEEE.std_logic_1164.all;
-  use IEEE.STD_LOGIC_ARITH.all;
-  use IEEE.STD_LOGIC_UNSIGNED.all;
+use IEEE.std_logic_1164.all;
+use IEEE.STD_LOGIC_ARITH.all;
+use IEEE.STD_LOGIC_UNSIGNED.all;
 
 entity HDMI is
 	port (
 		RstB         : in    std_logic; -- use push button Key0 (active low)
 		Clk          : in    std_logic; -- clock input 100 MHz
 
-		--<<<<	User >>>>--
 		-- User Control Interface
 		HDMIReq      : in    std_logic; -- request to start HDMI Module
 		HDMIBusy     : out   std_logic; -- HDMI Module is busy
@@ -66,7 +65,6 @@ entity HDMI is
 		HDMIFfEmpty  : in    std_logic; -- FIFO Empty Flag for HDMI
 		HDMIFfRdCnt  : in    std_logic_vector(15 downto 0); -- Read FIFO Counter for HDMI
 
-		--<<<< HDMI >>>>--
 		-- HDMI Control Interface
 		HDMI_TX_INT  : in    std_logic; -- HDMI Interrupt
 		HDMI_I2C_SCL : out   std_logic; -- I2C Clock
